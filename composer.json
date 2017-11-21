@@ -1,0 +1,38 @@
+{
+  "name": "mhndev/searchit-client",
+  "description": "php sdk for search server",
+  "keywords": ["search", "search client", "elasticsearch"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Majid Abdolhosseini",
+      "email": "majid@mhndev.com",
+      "homepage":"http://mhndev.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "mhndev\\searchitClient\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "psr/http-message": "1.*"
+  },
+
+  "suggest":{
+    "guzzlehttp/guzzle": "^6.3"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "6.*"
+  },
+
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
