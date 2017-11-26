@@ -10,6 +10,28 @@ use mhndev\searchitClient\Contract\iSearchableItem;
 class SearchableItem implements iSearchableItem
 {
 
+
+    /**
+     * @var mixed
+     */
+    protected $identifier;
+
+    /**
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * @var array
+     */
+    protected $entityArray;
+
+    /**
+     * @var array
+     */
+    protected $tags;
+
+
     /**
      * searchable_item identifier
      *
@@ -19,7 +41,7 @@ class SearchableItem implements iSearchableItem
      */
     function getIdentifier()
     {
-        // TODO: Implement getIdentifier() method.
+        return $this->identifier;
     }
 
     /**
@@ -30,7 +52,7 @@ class SearchableItem implements iSearchableItem
      */
     function getType()
     {
-        // TODO: Implement getType() method.
+        return $this->type;
     }
 
     /**
@@ -47,7 +69,7 @@ class SearchableItem implements iSearchableItem
      */
     function getEntityArray()
     {
-        // TODO: Implement getEntityArray() method.
+        return $this->entityArray;
     }
 
     /**
@@ -67,6 +89,7 @@ class SearchableItem implements iSearchableItem
      */
     function getTags()
     {
-        // TODO: Implement getTags() method.
+        return $this->tags;
     }
+
 }

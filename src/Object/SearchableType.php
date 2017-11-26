@@ -11,6 +11,26 @@ class SearchableType implements iSearchableType
 {
 
     /**
+     * @var mixed
+     */
+    protected $identifier;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var array
+     */
+    protected $searchable_fields;
+
+    /**
+     * @var bool
+     */
+    protected $support_autocomplete;
+
+    /**
      * searchable_type identifier
      *
      * you can do fetch (get single searchable_type) query by identifier
@@ -18,7 +38,7 @@ class SearchableType implements iSearchableType
      */
     function getIdentifier()
     {
-        // TODO: Implement getIdentifier() method.
+        return $this->identifier;
     }
 
     /**
@@ -29,7 +49,7 @@ class SearchableType implements iSearchableType
      */
     function getName()
     {
-        // TODO: Implement getName() method.
+        return $this->name;
     }
 
     /**
@@ -37,7 +57,7 @@ class SearchableType implements iSearchableType
      */
     function getSearchableFields()
     {
-        // TODO: Implement getSearchableFields() method.
+        return $this->searchable_fields;
     }
 
     /**
@@ -45,6 +65,6 @@ class SearchableType implements iSearchableType
      */
     function supportAutocomplete()
     {
-        // TODO: Implement supportAutocomplete() method.
+        return $this->support_autocomplete;
     }
 }

@@ -4,45 +4,19 @@ namespace mhndev\searchitClient\Driver;
 use mhndev\searchitClient\Contract\iDriver;
 use mhndev\searchitClient\Contract\iSearchableItem;
 use mhndev\searchitClient\Contract\iSearchableType;
-use mhndev\searchitClient\iHttpConnection;
 
 /**
- * Class HttpDriver
+ * Class ElasticDriver
  * @package mhndev\searchitClient\Driver
  */
-class HttpDriver implements iDriver
+class ElasticDriver implements iDriver
 {
 
     /**
-     * @var iHttpConnection
+     * @var
      */
-    protected $connection;
+    protected $elasticConnection;
 
-    /**
-     * @var string
-     */
-    protected $host;
-
-
-    /**
-     * HttpDriver constructor.
-     * @param iHttpConnection $connection
-     * @param string $host
-     */
-    function __construct(iHttpConnection $connection, string $host)
-    {
-        $this->connection = $connection;
-        $this->host = $host;
-    }
-
-
-    /**
-     * @return string
-     */
-    function getHost()
-    {
-        return $this->host;
-    }
 
 
     /**
@@ -54,13 +28,12 @@ class HttpDriver implements iDriver
      *
      * If gateway is a database and not server then gateway should be a repository class
      *
-     * @return iHttpConnection
+     * @return mixed
      */
     function getGateway()
     {
-        return $this->connection;
+        return $this->elasticConnection;
     }
-
 
     /**
      * @param string $type_name
@@ -75,24 +48,8 @@ class HttpDriver implements iDriver
         bool $hasAutocomplete = false
     )
     {
-        $response = $this->getGateway()->request($this->getEndpoint(__FUNCTION__), 'POST', [
-            'headers' => [
-                'content-Type' => 'application/json'
-            ],
-
-            'body' => [
-                'name' => $type_name,
-                'searchable_fields' => $searchable_fields,
-                'autocomplete' => $hasAutocomplete
-            ]
-        ]);
-
-        # if $response is successful then we should return created searchable type entity object
-
-        return $response;
-
+        // TODO: Implement createSearchableType() method.
     }
-
 
     /**
      * sample api response (JSON) :
@@ -132,17 +89,7 @@ class HttpDriver implements iDriver
      */
     function getSearchableTypeByIdentifier($identifier)
     {
-        $response = $this->getGateway()->request(
-            $this->getEndpoint(__FUNCTION__).'/'.$identifier,
-            'GET',
-            [
-                'headers' => [
-                    'Accept' => 'application/json'
-                ]
-            ]
-        );
-
-        return $response;
+        // TODO: Implement getSearchableTypeByIdentifier() method.
     }
 
     /**
@@ -223,17 +170,7 @@ class HttpDriver implements iDriver
      */
     function listSearchableTypes()
     {
-        $response = $this->getGateway()->request(
-            $this->getEndpoint(__FUNCTION__),
-            'GET',
-            [
-                'headers' => [
-                    'Accept' => 'application/json'
-                ]
-            ]
-        );
-
-        return $response;
+        // TODO: Implement listSearchableTypes() method.
     }
 
     /**
@@ -251,29 +188,7 @@ class HttpDriver implements iDriver
         iterable $tags = []
     )
     {
-        $body = [
-            'target' => $target_type,
-            'target_id' => $target_id,
-            'entity' => $item->getEntityArray()
-        ];
-
-        if(!empty($tags)){
-            $body['tags'] = $tags;
-        }
-
-        $response = $this->getGateway()->request(
-            $this->getEndpoint(__FUNCTION__),
-            'POST',
-            [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json'
-                ],
-                'body' => $body
-            ]
-        );
-
-        return $response;
+        // TODO: Implement insertSearchableItem() method.
     }
 
     /**
@@ -291,30 +206,7 @@ class HttpDriver implements iDriver
         iterable $tags
     )
     {
-
-        $body = [
-            'target' => $target_type,
-            'target_id' => $target_id,
-            'entity' => $item->getEntityArray()
-        ];
-
-        if(!empty($tags)){
-            $body['tags'] = $tags;
-        }
-
-        $response = $this->getGateway()->request(
-            $this->getEndpoint(__FUNCTION__),
-            'PUT',
-            [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json'
-                ],
-                'body' => $body
-            ]
-        );
-
-        return $response;
+        // TODO: Implement updateSearchableItem() method.
     }
 
     /**
@@ -326,25 +218,7 @@ class HttpDriver implements iDriver
      */
     function search(array $target_types, $query, $limit = 10, $offset = 0)
     {
-        $page = (int)($offset / $limit) + 1;
-        $per_page = $limit;
-
-        $endpoint = $this->getEndpoint(__FUNCTION__).http_build_query([
-            'page' => $page,
-            'per_page' => $per_page
-        ]);
-
-        $response = $this->getGateway()->request(
-            $endpoint,
-            'GET',
-            [
-                'headers' => [
-                    'Accept' => 'application/json'
-                ]
-            ]
-        );
-
-        return $response;
+        // TODO: Implement search() method.
     }
 
     /**
@@ -356,22 +230,7 @@ class HttpDriver implements iDriver
      */
     function searchPager(array $target_types, $query, $page = 1, $per_page = 10)
     {
-        $endpoint = $this->getEndpoint(__FUNCTION__).http_build_query([
-            'page' => $page,
-            'per_page' => $per_page
-        ]);
-
-        $response = $this->getGateway()->request(
-            $endpoint,
-            'GET',
-            [
-                'headers' => [
-                    'Accept' => 'application/json'
-                ]
-            ]
-        );
-
-        return $response;
+        // TODO: Implement searchPager() method.
     }
 
     /**
@@ -381,61 +240,7 @@ class HttpDriver implements iDriver
      */
     function autocomplete(string $query, array $types = [])
     {
-        $endpoint = $this->getEndpoint(__FUNCTION__).
-            '?'.
-            http_build_query(['q' => $query, 'types' => $types])
-        ;
-
-        $response = $this->getGateway()->request(
-            $endpoint,
-            'GET',
-            [   'headers' => [ 'Accept' => 'application/json'] ]
-        );
-
-        return $response;
+        // TODO: Implement autocomplete() method.
     }
-
-
-    /**
-     * @param $function
-     * @return string
-     */
-    function getEndpoint($function)
-    {
-        $endpoint = rtrim($this->getHost(),'/');
-
-        switch ($function){
-            case 'createSearchableType':
-                $endpoint .= '/type';
-            break;
-
-            case 'getSearchableTypeByIdentifier':
-                $endpoint  = '/type';
-            break;
-
-            case 'listSearchableTypes':
-                $endpoint .= '/type';
-            break;
-
-            case 'insertSearchableItem':
-                $endpoint = '/item';
-            break;
-
-            case 'updateSearchableItem':
-                $endpoint = '/item';
-            break;
-
-            case 'search':
-                $endpoint = '/search';
-            break;
-
-            case 'searchPager':
-                $endpoint = '/search';
-            break;
-        }
-
-        return $endpoint;
-    }
-
 
 }

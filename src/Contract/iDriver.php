@@ -26,15 +26,13 @@ interface iDriver
      * @param string $type_name
      * @param iterable $searchable_fields
      * @param bool $hasAutocomplete
-     * @param iterable $tags
      *
      * @return iSearchableType
      */
     function createSearchableType(
         string $type_name,
         iterable $searchable_fields,
-        bool $hasAutocomplete = false,
-        iterable $tags = []
+        bool $hasAutocomplete = false
     );
 
 
